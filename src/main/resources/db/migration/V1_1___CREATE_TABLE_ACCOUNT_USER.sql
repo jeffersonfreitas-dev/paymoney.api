@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS users_accounts(
+    uuid VARCHAR(35) NOT NULL PRIMARY KEY,
+    user_id VARCHAR(35) NOT NULL,
+    balance DECIMAL(10,2) NOT NULL DEFAULT 0.0,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (user_id) REFERENCES users(uuid)
+);
