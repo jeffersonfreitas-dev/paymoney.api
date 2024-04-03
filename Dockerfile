@@ -4,6 +4,7 @@ WORKDIR /app
 COPY build.gradle settings.gradle gradlew /app/
 COPY gradle /app/gradle
 COPY src /app/src
+RUN chmod +x gradlew
 RUN ./gradlew build
 
 FROM amazoncorretto:22.0.0-alpine3.19
