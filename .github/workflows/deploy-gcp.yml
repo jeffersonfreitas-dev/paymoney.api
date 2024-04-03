@@ -1,0 +1,26 @@
+name: GCP Deployment
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_deploy:
+    runs-on: self-hosted
+    env:
+      APP_NAME: paymoney-api
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Google Auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          credentials_json: ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }}
+
+      - name: Rodando o projeto
+        run: |
+          docker rm -f ${{ env.APP_NAME }} 2>/dev/null
+          docker build -t ${{ env.APP_NAME}} .
+          docker run -d --name ${{ env.APP_NAME}} ${{ env.APP_NAME}}:latest
